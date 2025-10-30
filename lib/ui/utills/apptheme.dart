@@ -37,6 +37,14 @@ abstract final class AppTheme {
     ),
   );
 
+  static final lightDefultTextBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(16),
+    borderSide: BorderSide(color: Colors.grey),
+  );
+  static final darkDefultTextBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(16),
+    borderSide: BorderSide(color: Appcolor.blue),
+  );
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Appcolor.white,
     primaryColor: Appcolor.blue,
@@ -44,6 +52,12 @@ abstract final class AppTheme {
     textTheme: _lightTextTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(backgroundColor: Appcolor.blue),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: lightDefultTextBorder,
+      focusedBorder: lightDefultTextBorder,
+      enabledBorder: lightDefultTextBorder,
+      hintStyle: _lightTextTheme.titleSmall,
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Appcolor.blue,
@@ -71,6 +85,12 @@ abstract final class AppTheme {
           bottomRight: Radius.circular(16),
         ),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: darkDefultTextBorder,
+      focusedBorder: darkDefultTextBorder,
+      enabledBorder: darkDefultTextBorder,
+      hintStyle: _darkTextTheme.titleSmall,
     ),
   );
 }
