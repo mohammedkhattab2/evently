@@ -18,6 +18,11 @@ abstract final class AppTheme {
       color: Appcolor.blue,
       fontWeight: FontWeight.w500,
     ),
+    labelSmall: TextStyle(
+       fontSize: 16,
+      color: Appcolor.black,
+      fontWeight: FontWeight.w500,
+    )
   );
   static final TextTheme _darkTextTheme = TextTheme(
     titleSmall: const TextStyle(
@@ -51,7 +56,19 @@ abstract final class AppTheme {
     colorScheme: ColorScheme.fromSeed(seedColor: Appcolor.blue),
     textTheme: _lightTextTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(backgroundColor: Appcolor.blue),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Appcolor.blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Appcolor.blue),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 16),
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       border: lightDefultTextBorder,
@@ -68,6 +85,7 @@ abstract final class AppTheme {
         ),
       ),
     ),
+    dividerTheme: DividerThemeData(color: Appcolor.blue, thickness: 1)
   );
   static ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: Appcolor.white,

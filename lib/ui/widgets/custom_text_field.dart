@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String hint;
   final String? prefixicon;
   final bool isPassword;
@@ -12,13 +12,29 @@ class CustomTextField extends StatelessWidget {
   });
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool obscureText = true;
+  @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        prefixIcon: prefixicon == null ? null : Image.asset(prefixicon!),
-        suffixIcon: isPassword ? Icon(Icons.remove_red_eye) : null,
-        hintText: hint,
+        prefixIcon: widget.prefixicon == null
+            ? null
+            : Image.asset(widget.prefixicon!),
+        suffixIcon: widget.isPassword ? InkWell(
+          onTap: (){
+            obscureText =!obscureText;
+            setState(() {
+              
+            });
+          } ,
+          child: Icon(obscureText? Icons.visibility_off : Icons.remove_red_eye)) : null,
+        hintText: widget.hint,
       ),
+      obscureText: widget.isPassword? obscureText : false
     );
   }
 }
