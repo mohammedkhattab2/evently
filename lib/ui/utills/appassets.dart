@@ -6,4 +6,7 @@ abstract class Appassets {
   static const String icgoogle = "assets/image/ic_google.png";
   static const String egFlag = "assets/image/eg_flag.png";
   static const String usaflag = "assets/image/usa_flag.png";
+  static const String icName = "assets/image/ic_name.png";
+  static const String resetPasswordImage =
+      "assets/image/reset_password_image.png";
 }

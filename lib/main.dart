@@ -25,10 +25,9 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [
         Locale('en'), // English
-        Locale('es'), // Spanish
+        Locale('ar'), // Spanish
       ],
       home: Splash(),
-      
     );
   }
 }

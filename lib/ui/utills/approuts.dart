@@ -1,6 +1,7 @@
 import 'package:evently/ui/screens/home/home.dart';
 import 'package:evently/ui/screens/login/login.dart';
 import 'package:evently/ui/screens/register/register.dart';
+import 'package:evently/ui/screens/reset%20password/reset_password.dart';
 import 'package:flutter/material.dart';
 
 abstract final class Approuts {
@@ -14,5 +15,9 @@ abstract final class Approuts {
 
   static Route get register {
     return MaterialPageRoute(builder: (_) => const Register());
+  }
+
+  static Route get resetPassword {
+    return MaterialPageRoute(builder: (_) => const ResetPassword());
   }
 }

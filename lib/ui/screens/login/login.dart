@@ -1,6 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
+import 'package:evently/ui/utills/approuts.dart';
 import 'package:evently/ui/widgets/custom_botton.dart';
 import 'package:evently/ui/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -66,12 +67,17 @@ class _LoginState extends State<Login> {
     ),
   );
 
-  Widget buildForgetPasswordText(BuildContext context) => Text(
-    l10n.forgetPassword,
-    textAlign: TextAlign.end,
-    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-      fontStyle: FontStyle.italic,
-      decoration: TextDecoration.underline,
+  Widget buildForgetPasswordText(BuildContext context) => InkWell(
+    onTap: () {
+      Navigator.push(context, Approuts.resetPassword);
+    },
+    child: Text(
+      l10n.forgetPassword,
+      textAlign: TextAlign.end,
+      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+        fontStyle: FontStyle.italic,
+        decoration: TextDecoration.underline,
+      ),
     ),
   );
 
@@ -84,11 +90,15 @@ class _LoginState extends State<Login> {
         AppLocalizations.of(context)!.dontHaveAccount,
         style: Theme.of(context).textTheme.labelSmall,
       ),
-      Text(
-        AppLocalizations.of(context)!.createAccount,
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-          fontStyle: FontStyle.italic,
-          decoration: TextDecoration.underline,
+      InkWell(
+        onTap: () => Navigator.push(context, Approuts.register),
+        child: Text(
+          AppLocalizations.of(context)!.createAccount,
+
+          style: Theme.of(context).textTheme.labelMedium!.copyWith(
+            fontStyle: FontStyle.italic,
+            decoration: TextDecoration.underline,
+          ),
         ),
       ),
     ],
@@ -122,7 +132,7 @@ class _LoginState extends State<Login> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(Appassets.usaflag),
-          SizedBox(width: 4),
+          SizedBox(width: 20.81),
           Image.asset(Appassets.egFlag),
         ],
       ),
