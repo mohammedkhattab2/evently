@@ -1,10 +1,14 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/ui/provider/language_provider.dart';
+import 'package:evently/ui/theme%20provider/theme_provider.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/utills/approuts.dart';
 import 'package:evently/ui/widgets/custom_botton.dart';
 import 'package:evently/ui/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -18,12 +22,13 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     l10n = AppLocalizations.of(context)!;
+    languageProvider = Provider.of(context);
+    themeProvider = Provider.of(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 20),
               buildapplogo(context),
@@ -43,6 +48,8 @@ class _LoginState extends State<Login> {
               buildGoogleLogin(),
               SizedBox(height: 24.64),
               buildLanguageToggle(),
+              SizedBox(height: 24.64),
+              buildthemeToggle(),
             ],
           ),
         ),
@@ -71,12 +78,15 @@ class _LoginState extends State<Login> {
     onTap: () {
       Navigator.push(context, Approuts.resetPassword);
     },
-    child: Text(
-      l10n.forgetPassword,
-      textAlign: TextAlign.end,
-      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-        fontStyle: FontStyle.italic,
-        decoration: TextDecoration.underline,
+    child: Container(
+      width: double.infinity,
+      child: Text(
+        l10n.forgetPassword,
+        textAlign: TextAlign.end,
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+          fontStyle: FontStyle.italic,
+          decoration: TextDecoration.underline,
+        ),
       ),
     ),
   );
@@ -119,23 +129,31 @@ class _LoginState extends State<Login> {
     backGroundcolor: Appcolor.white,
     textColor: Appcolor.blue,
   );
+  late LanguageProvider languageProvider;
+  Widget buildLanguageToggle() {
+    return AnimatedToggleSwitch<String>.dual(
+      iconBuilder: (language) =>
+          Image.asset(language == "en" ? Appassets.usaflag : Appassets.egFlag),
+      current: languageProvider.currentlanguage,
+      first: "ar",
+      second: "en",
+      onChanged: (language) {
+        languageProvider.changelanguage(language);
+      },
+    );
+  }
 
-  Widget buildLanguageToggle() => Center(
-    child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Appcolor.white,
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: Appcolor.blue, width: 2),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(Appassets.usaflag),
-          SizedBox(width: 20.81),
-          Image.asset(Appassets.egFlag),
-        ],
-      ),
-    ),
-  );
+  late ThemeProvider themeProvider;
+  Widget buildthemeToggle() {
+    return AnimatedToggleSwitch<ThemeMode>.dual(
+      current: themeProvider.themeMode,
+      iconBuilder: (mode) =>
+          Icon(mode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode),
+      first: ThemeMode.light,
+      second: ThemeMode.dark,
+      onChanged: (mode) {
+        themeProvider.changeMood(mode);
+      },
+    );
+  }
 }

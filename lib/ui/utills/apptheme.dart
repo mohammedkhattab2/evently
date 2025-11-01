@@ -19,10 +19,10 @@ abstract final class AppTheme {
       fontWeight: FontWeight.w500,
     ),
     labelSmall: TextStyle(
-       fontSize: 16,
+      fontSize: 16,
       color: Appcolor.black,
       fontWeight: FontWeight.w500,
-    )
+    ),
   );
   static final TextTheme _darkTextTheme = TextTheme(
     titleSmall: const TextStyle(
@@ -38,6 +38,11 @@ abstract final class AppTheme {
     titleMedium: TextStyle(
       fontSize: 20,
       color: Appcolor.blue,
+      fontWeight: FontWeight.w500,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 16,
+      color: Appcolor.black,
       fontWeight: FontWeight.w500,
     ),
   );
@@ -85,10 +90,10 @@ abstract final class AppTheme {
         ),
       ),
     ),
-    dividerTheme: DividerThemeData(color: Appcolor.blue, thickness: 1)
+    dividerTheme: DividerThemeData(color: Appcolor.blue, thickness: 1),
   );
   static ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: Appcolor.white,
+    scaffoldBackgroundColor: Appcolor.darkPurple,
     primaryColor: Appcolor.blue,
     colorScheme: ColorScheme.fromSeed(seedColor: Appcolor.blue),
     textTheme: _darkTextTheme,
