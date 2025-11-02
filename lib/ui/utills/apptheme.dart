@@ -97,9 +97,6 @@ abstract final class AppTheme {
     primaryColor: Appcolor.blue,
     colorScheme: ColorScheme.fromSeed(seedColor: Appcolor.blue),
     textTheme: _darkTextTheme,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(backgroundColor: Appcolor.blue),
-    ),
     appBarTheme: AppBarTheme(
       backgroundColor: Appcolor.blue,
       shape: RoundedRectangleBorder(
@@ -114,6 +111,21 @@ abstract final class AppTheme {
       focusedBorder: darkDefultTextBorder,
       enabledBorder: darkDefultTextBorder,
       hintStyle: _darkTextTheme.titleSmall,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Appcolor.blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Appcolor.blue),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 16),
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     ),
   );
 }

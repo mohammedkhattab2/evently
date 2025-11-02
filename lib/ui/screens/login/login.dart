@@ -1,7 +1,7 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/provider/language_provider.dart';
-import 'package:evently/ui/theme%20provider/theme_provider.dart';
+import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/utills/approuts.dart';

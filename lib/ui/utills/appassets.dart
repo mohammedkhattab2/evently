@@ -7,6 +7,15 @@ abstract class Appassets {
   static const String egFlag = "assets/image/eg_flag.png";
   static const String usaflag = "assets/image/usa_flag.png";
   static const String icName = "assets/image/ic_name.png";
+  static const String ichomeActive = "assets/image/ic_home_active.png";
+  static const String ichomeUnActive = "assets/image/ic_home_unactive.png";
+  static const String icmapActive = "assets/image/ic_map_active.png";
+  static const String icmapUnActive = "assets/image/ic_map_disactive.png";
+  static const String icLoveActive = "assets/image/ic_love_active.png";
+  static const String icLoveUnActive = "assets/image/ic_love_disactive.png";
+  static const String icProfileActive = "assets/image/ic_profile_active.png";
+  static const String icProfileUnActive =
+      "assets/image/ic_profile_unactive.png";
   static const String resetPasswordImage =
       "assets/image/reset_password_image.png";
 }
