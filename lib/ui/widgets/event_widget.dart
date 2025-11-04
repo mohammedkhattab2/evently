@@ -10,20 +10,30 @@ class EventWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(8),
+      height: MediaQuery.of(context).size.height* .25,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
         image: DecorationImage(image: AssetImage(eventDm.image)),
       ),
-      child: Column(children: [builddate(), buildTitle()]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [builddate(),
+      Spacer(),
+       buildTitle()]),
     );
   }
 
   builddate() {
     return Container(
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(left: 8 , top: 8),
       decoration: BoxDecoration(
         color: Appcolor.white,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
+        textAlign: TextAlign.center,
         eventDm.date,
         style: TextStyle(
           color: Appcolor.blue,
@@ -35,6 +45,9 @@ class EventWidget extends StatelessWidget {
   }
 
   buildTitle() => Container(
+    margin: EdgeInsets.all(8),
+    padding: EdgeInsets.all(10),
+
     decoration: BoxDecoration(
       color: Appcolor.white,
         borderRadius: BorderRadius.circular(8),

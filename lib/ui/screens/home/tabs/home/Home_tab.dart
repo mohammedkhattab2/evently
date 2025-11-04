@@ -1,4 +1,9 @@
+import 'package:evently/model/catogry_dm.dart';
+import 'package:evently/model/event_dm.dart';
+import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
+import 'package:evently/ui/widgets/catogry_tabs.dart';
+import 'package:evently/ui/widgets/event_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeTab extends StatelessWidget {
@@ -23,7 +28,7 @@ class HomeTab extends StatelessWidget {
         bottomRight: Radius.circular(20),
       ),
     ),
-    child: Column(children: [buildUserInfo(), buildTabs()]),
+    child: Column(children: [buildUserInfo(), buildCatogryTabs()]),
   );
 
   buildUserInfo() => Row(
@@ -65,10 +70,31 @@ class HomeTab extends StatelessWidget {
     ],
   );
 
-  buildTabs() => Container();
+  buildCatogryTabs() => Container(
+    child: CatogryTabs(
+      onTabSelected: (catogry){
+
+      },
+      catogries: CatogryDm.homeCatogries,
+      selectedTabBg: Appcolor.white,
+      unselectedTabBg: Appcolor.blue,
+      selectedTabTextColor: Appcolor.blue,
+      unselectedTabTexrColor: Appcolor.white),
+  );
 
   Widget buildEventsList() => ListView.builder(
     itemCount: 10,
-    itemBuilder: (context, index) => Container(),
+    itemBuilder: (context, index) => EventWidget(
+      eventDm: EventDm(
+        title: "This is a Birthday Party ",
+        image: Appassets.birthday,
+        date: "21 \n nov",
+        isFavorite: true,
+        description: "description",
+        time: "time",
+        lat: 0,
+        lng: 0,
+      ),
+    ),
   );
 }
