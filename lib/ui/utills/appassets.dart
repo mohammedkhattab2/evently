@@ -14,6 +14,8 @@ abstract class Appassets {
   static const String icLoveActive = "assets/image/ic_love_active.png";
   static const String icLoveUnActive = "assets/image/ic_love_disactive.png";
   static const String icProfileActive = "assets/image/ic_profile_active.png";
+  static const String icfavoritActive = "assets/image/ic_favorite.png";
+  static const String icfavoritUnActive = "assets/image/ic_favorit_unactive.png";
   static const String icProfileUnActive =
       "assets/image/ic_profile_unactive.png";
   static const String resetPasswordImage =
