@@ -28,7 +28,9 @@ class HomeTab extends StatelessWidget {
         bottomRight: Radius.circular(20),
       ),
     ),
-    child: Column(children: [buildUserInfo(), buildCatogryTabs()]),
+    child: Column(children: [buildUserInfo(),
+    SizedBox(height: 8,),
+     buildCatogryTabs()]),
   );
 
   buildUserInfo() => Row(
@@ -70,17 +72,16 @@ class HomeTab extends StatelessWidget {
     ],
   );
 
-  buildCatogryTabs() => Container(
-    child: CatogryTabs(
-      onTabSelected: (catogry){
-
-      },
-      catogries: CatogryDm.homeCatogries,
-      selectedTabBg: Appcolor.white,
-      unselectedTabBg: Appcolor.blue,
-      selectedTabTextColor: Appcolor.blue,
-      unselectedTabTexrColor: Appcolor.white),
-  );
+  buildCatogryTabs() => CatogryTabs(
+    
+    onTabSelected: (catogry){
+  
+    },
+    catogries: CatogryDm.homeCatogries,
+    selectedTabBg: Appcolor.white,
+    unselectedTabBg: Appcolor.blue,
+    selectedTabTextColor: Appcolor.blue,
+    unselectedTabTexrColor: Appcolor.white);
 
   Widget buildEventsList() => ListView.builder(
     itemCount: 10,

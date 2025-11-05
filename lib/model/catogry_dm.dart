@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 class CatogryDm {
   IconData icon;
   String title;
-  CatogryDm({required this.icon, required this.title});
+  String image;
+  CatogryDm({required this.icon, required this.title , required this.image});
 
   static List<CatogryDm> homeCatogries = [
-    CatogryDm(icon: Icons.all_inbox, title: "all"),
-    CatogryDm(icon: Icons.sports_handball, title: "sports"),
-    CatogryDm(icon: Icons.holiday_village, title: "Holiday"),
-    CatogryDm(icon: Icons.meeting_room, title: "Meeting"),
-    CatogryDm(icon: Icons.cake, title: "Birthday"),
-    CatogryDm(icon: Icons.book_online, title: "booking Club"),
+    CatogryDm(icon: Icons.all_inbox, title: "all", image: Appassets.appVerticalLogo),
+    CatogryDm(icon: Icons.sports_handball, title: "sports", image: Appassets.sportsImage,),
+    CatogryDm(icon: Icons.holiday_village, title: "Holiday", image: Appassets.holidayImage),
+    CatogryDm(icon: Icons.meeting_room, title: "Meeting", image: Appassets.mettingImage),
+    CatogryDm(icon: Icons.cake, title: "Birthday", image: Appassets.birthdayImage),
+    CatogryDm(icon: Icons.book_online, title: "booking Club", image: Appassets.bookImage),
   ];
   static List<CatogryDm> creatEventCatogries = [
-    CatogryDm(icon: Icons.all_inbox, title: "all"),
-    CatogryDm(icon: Icons.sports_handball, title: "sports"),
-    CatogryDm(icon: Icons.holiday_village, title: "Holiday"),
-    CatogryDm(icon: Icons.meeting_room, title: "Meeting"),
-    CatogryDm(icon: Icons.cake,  title: "Birthday"),
-    CatogryDm(icon: Icons.book_online, title: "bocking Club"),
+    CatogryDm(icon: Icons.sports_handball, title: "sports", image: Appassets.sportsImage,),
+    CatogryDm(icon: Icons.holiday_village, title: "Holiday", image: Appassets.holidayImage),
+    CatogryDm(icon: Icons.meeting_room, title: "Meeting", image: Appassets.mettingImage),
+    CatogryDm(icon: Icons.cake, title: "Birthday", image: Appassets.birthdayImage),
+    CatogryDm(icon: Icons.book_online, title: "bocking Club", image: Appassets.bookImage),
   ];
 }

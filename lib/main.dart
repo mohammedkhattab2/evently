@@ -1,5 +1,6 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/provider/language_provider.dart';
+import 'package:evently/ui/screens/addevent/add_event.dart';
 import 'package:evently/ui/screens/home/home.dart';
 import 'package:evently/ui/screens/splash/splash.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // Spanish
       ],
-      home: const Home(),
+      home: const AddEvent(),
     );
   }
 }

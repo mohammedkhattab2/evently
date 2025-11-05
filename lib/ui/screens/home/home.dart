@@ -4,6 +4,7 @@ import 'package:evently/ui/screens/home/tabs/map/map_tab.dart';
 import 'package:evently/ui/screens/home/tabs/profile/profile_tab.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
+import 'package:evently/ui/utills/approuts.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -92,8 +93,10 @@ class _HomeState extends State<Home> {
     return FloatingActionButton(
       shape: StadiumBorder(side: BorderSide(color: Appcolor.white)),
       backgroundColor: Appcolor.blue,
+      onPressed: () {
+        Navigator.push(context, Approuts.addEvent);
+      },
       child: const Icon(Icons.add),
-      onPressed: () {},
     );
   }
 }

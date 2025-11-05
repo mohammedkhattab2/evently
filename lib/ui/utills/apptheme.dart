@@ -82,13 +82,10 @@ abstract final class AppTheme {
       hintStyle: _lightTextTheme.titleSmall,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: Appcolor.blue,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(16),
-          bottomRight: Radius.circular(16),
-        ),
-      ),
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 22 , fontWeight: FontWeight.w400, color: Appcolor.blue),
+      
     ),
     dividerTheme: DividerThemeData(color: Appcolor.blue, thickness: 1),
   );
