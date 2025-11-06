@@ -1,5 +1,8 @@
+import 'package:evently/ui/screens/home/home.dart';
+import 'package:evently/ui/screens/home/tabs/home/Home_tab.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
+import 'package:evently/ui/utills/approuts.dart';
 import 'package:evently/ui/utills/dialog_utilites.dart';
 import 'package:evently/ui/widgets/custom_botton.dart';
 import 'package:evently/ui/widgets/custom_text_field.dart';
@@ -87,11 +90,28 @@ class _RegisterState extends State<Register> {
     text: "Creat Account",
     onClick: () async {
       showLoading(context);
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailControler.text,
-        password: passwordControler.text,
-      );
-      Navigator  .pop(context);
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailControler.text,
+          password: passwordControler.text,
+        );
+        Navigator.pop(context);
+        Navigator.push(context, Approuts.home);
+      } on FirebaseAuthException catch (e) {
+        var message = ' something went wrong, please try again';
+        if (e.code == 'weak-password') {
+          message = 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          message = 'The account already exists for that email.';
+        }
+        Navigator.pop(context);
+        showMessege(
+          context,
+          title: "Error",
+          content: message,
+          posButtonTitle: "ok",
+        );
+      }
     },
   );
 

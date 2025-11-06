@@ -5,8 +5,10 @@ import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/utills/approuts.dart';
+import 'package:evently/ui/utills/dialog_utilites.dart';
 import 'package:evently/ui/widgets/custom_botton.dart';
 import 'package:evently/ui/widgets/custom_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +21,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   late AppLocalizations l10n;
+  TextEditingController emailControler = TextEditingController();
+  TextEditingController passwordControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     l10n = AppLocalizations.of(context)!;
@@ -63,7 +67,11 @@ class _LoginState extends State<Login> {
   );
 
   Widget buildEmailTextField() => Container(
-    child: CustomTextField(hint: l10n.email, prefixicon: Appassets.icEmail),
+    child: CustomTextField(
+      hint: l10n.email,
+      prefixicon: Appassets.icEmail,
+      controller: emailControler,
+    ),
   );
 
   Widget buildPasswordTextField() => Container(
@@ -71,6 +79,7 @@ class _LoginState extends State<Login> {
       hint: l10n.password,
       prefixicon: Appassets.icpassword,
       isPassword: true,
+      controller: passwordControler,
     ),
   );
 
@@ -91,7 +100,29 @@ class _LoginState extends State<Login> {
     ),
   );
 
-  Widget buildLoginbutton() => CustomBotton(text: l10n.login, onClick: () {});
+  Widget buildLoginbutton() => CustomBotton(
+    text: l10n.login,
+    onClick: () async {
+      showLoading(context);
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailControler.text,
+          password: passwordControler.text,
+        );
+        Navigator.pop(context);
+        Navigator.push(context, Approuts.home);
+      } on FirebaseAuthException catch (e) {
+        var message = e.message ?? "Error";
+        Navigator.pop(context);
+        showMessege(
+          context,
+          title: "Error",
+          content: message,
+          posButtonTitle: "ok",
+        );
+      }
+    },
+  );
 
   Widget buildSignupText() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +155,7 @@ class _LoginState extends State<Login> {
 
   Widget buildGoogleLogin() => CustomBotton(
     text: l10n.loginWithGoogle,
-    onClick: () {},
+    onClick: () async {},
     icon: Image.asset(Appassets.icgoogle),
     backGroundcolor: Appcolor.white,
     textColor: Appcolor.blue,
