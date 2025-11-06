@@ -1,7 +1,9 @@
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
+import 'package:evently/ui/utills/dialog_utilites.dart';
 import 'package:evently/ui/widgets/custom_botton.dart';
 import 'package:evently/ui/widgets/custom_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -12,6 +14,10 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController userNameControler = TextEditingController();
+  TextEditingController emailControler = TextEditingController();
+  TextEditingController passwordControler = TextEditingController();
+  TextEditingController rePasswordControler = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,23 +57,43 @@ class _RegisterState extends State<Register> {
     height: MediaQuery.of(context).size.height * 0.2,
   );
 
-  buildName() => CustomTextField(hint: "Name", prefixicon: Appassets.icName);
+  buildName() => CustomTextField(
+    hint: "Name",
+    prefixicon: Appassets.icName,
+    controller: userNameControler,
+  );
 
-  buildEmail() => CustomTextField(hint: "Email", prefixicon: Appassets.icEmail);
+  buildEmail() => CustomTextField(
+    hint: "Email",
+    prefixicon: Appassets.icEmail,
+    controller: emailControler,
+  );
 
   buildPassword() => CustomTextField(
     hint: "Password",
     prefixicon: Appassets.icpassword,
     isPassword: true,
+    controller: passwordControler,
   );
 
   buildConfirmPassword() => CustomTextField(
     hint: "Confim Password",
     prefixicon: Appassets.icpassword,
     isPassword: true,
+    controller: rePasswordControler,
   );
 
-  buildCreatAccount() => CustomBotton(text: "Creat Account", onClick: () {});
+  buildCreatAccount() => CustomBotton(
+    text: "Creat Account",
+    onClick: () async {
+      showLoading(context);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailControler.text,
+        password: passwordControler.text,
+      );
+      Navigator  .pop(context);
+    },
+  );
 
   builldLogin() => Row(
     mainAxisAlignment: MainAxisAlignment.center,

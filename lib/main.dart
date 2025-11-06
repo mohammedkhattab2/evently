@@ -1,20 +1,22 @@
+import 'package:evently/firebase_options.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/screens/addevent/add_event.dart';
 import 'package:evently/ui/screens/home/home.dart';
+import 'package:evently/ui/screens/login/login.dart';
 import 'package:evently/ui/screens/splash/splash.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utills/apptheme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (_) => LanguageProvider(),
-  //     child: MyApp()),
-  // );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [
@@ -26,7 +28,7 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class  MyApp extends StatelessWidget {
   MyApp({super.key});
   late LanguageProvider languageProvider;
   late ThemeProvider themeProvider;
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // Spanish
       ],
-      home: const AddEvent(),
+      home: const Login(),
     );
   }
 }
