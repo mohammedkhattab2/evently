@@ -87,14 +87,13 @@ class HomeTab extends StatelessWidget {
     itemCount: 10,
     itemBuilder: (context, index) => EventWidget(
       eventDm: EventDm(
+        ownerId: "",
         title: "This is a Birthday Party ",
-        image: Appassets.birthday,
-        date: "21 \n nov",
-        isFavorite: true,
+        catogryId: Appassets.birthday,
+        date: DateTime.now(),
         description: "description",
-        time: "time",
         lat: 0,
-        lng: 0,
+        lng: 0, id: '',
       ),
     ),
   );

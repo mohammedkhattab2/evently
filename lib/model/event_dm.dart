@@ -1,21 +1,25 @@
+import 'package:flutter/material.dart';
+
 class EventDm {
+  static const String colictionName = "events";
+  String id;
   String title;
-  String image;
-  String date;
-  bool isFavorite;
+  String catogryId;
+  DateTime date;
   String description;
-  String time;
-  int lat;
-  int lng;
+  int? lat;
+  int? lng;
+  String ownerId;
 
   EventDm({
+    required this.ownerId,
+    required this.id,
     required this.title,
-    required this.image,
+    required this.catogryId,
     required this.date,
-    required this.isFavorite,
     required this.description,
-    required this.time,
-    required this.lat,
-    required this.lng,
+  
+    this.lat,
+    this.lng,
   });
 }

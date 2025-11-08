@@ -14,7 +14,7 @@ class EventWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .25,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(image: AssetImage(eventDm.image)),
+        image: DecorationImage(image: AssetImage("")),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class EventWidget extends StatelessWidget {
       ),
       child: Text(
         textAlign: TextAlign.center,
-        eventDm.date,
+        eventDm.date.toString(),
         style: TextStyle(
           color: Appcolor.blue,
           fontSize: 20,
@@ -64,7 +64,7 @@ class EventWidget extends StatelessWidget {
         Spacer(),
         ImageIcon(
           AssetImage(
-            eventDm.isFavorite
+            true 
                 ? Appassets.icfavoritActive
                 : Appassets.icfavoritUnActive,
           ),
