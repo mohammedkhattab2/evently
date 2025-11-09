@@ -1,6 +1,7 @@
 import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/model/catogry_dm.dart';
 import 'package:evently/model/event_dm.dart';
+import 'package:evently/model/user_dm.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/utills/dialog_utilites.dart';
@@ -52,12 +53,15 @@ class _AddEventState extends State<AddEvent> {
 
   buildCatogryImage() => ClipRRect(
     borderRadius: BorderRadiusGeometry.circular(16),
-    child: Image.asset(Appassets.sportsImage),
+    child: Image.asset(selectedCatogry.image),
   );
 
   buildCatogryTab() => CatogryTabs(
     onTabSelected: (catogry) {
       selectedCatogry = catogry;
+      setState(() {
+        
+      });
     },
     catogries: CatogryDm.creatEventCatogries,
     selectedTabBg: Appcolor.blue,
@@ -189,7 +193,7 @@ class _AddEventState extends State<AddEvent> {
           selectedTime.minute,
         );
         EventDm eventDm = EventDm(
-          ownerId: "",
+          ownerId: UserDm.currentUser!.id,
           id: "",
           title: titleControler.text,
           catogryId: selectedCatogry.title,

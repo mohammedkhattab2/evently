@@ -1,3 +1,4 @@
+import 'package:evently/model/catogry_dm.dart';
 import 'package:evently/model/event_dm.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
@@ -9,12 +10,13 @@ class EventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CatogryDm catogryDm = CatogryDm.fromtitle(eventDm.catogryId);
     return Container(
       margin: EdgeInsets.all(8),
       height: MediaQuery.of(context).size.height * .25,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(image: AssetImage("")),
+        image: DecorationImage(image: AssetImage(catogryDm.image)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,14 +33,27 @@ class EventWidget extends StatelessWidget {
         color: Appcolor.white,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        textAlign: TextAlign.center,
-        eventDm.date.toString(),
-        style: TextStyle(
-          color: Appcolor.blue,
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-        ),
+      child: Column(
+        children: [
+          Text(
+            textAlign: TextAlign.center,
+            eventDm.date.day.toString(),
+            style: TextStyle(
+              color: Appcolor.blue,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            textAlign: TextAlign.center,
+            getMonth(eventDm.date.month),
+            style: TextStyle(
+              color: Appcolor.blue,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -64,12 +79,32 @@ class EventWidget extends StatelessWidget {
         Spacer(),
         ImageIcon(
           AssetImage(
-            true 
-                ? Appassets.icfavoritActive
-                : Appassets.icfavoritUnActive,
+            true ? Appassets.icfavoritActive : Appassets.icfavoritUnActive,
           ),
         ),
       ],
     ),
   );
+  String getMonth(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    if (month < 1 || month > 12) {
+      throw ArgumentError('Month must be between 1 and 12');
+    }
+
+    return months[month - 1];
+  }
 }

@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // Spanish
       ],
-      home: const AddEvent(),
+      home: const Login(),
     );
   }
 }

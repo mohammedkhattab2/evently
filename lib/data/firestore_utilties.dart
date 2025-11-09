@@ -7,27 +7,38 @@ Future<void> addUsersToFirestore(UserDm user) async {
     UserDm.collectionName,
   );
   var embtyDoc = userCollection.doc(user.id);
-  await embtyDoc.set({
-    "id" : user.id,
-    "name": user.name,
-    " emailAddress" : user.emailAddress
-  });
+  embtyDoc.set(user.toJason());
 }
 
-// userDm getUsersFromFirestore (String userId){}
+Future<UserDm> getUsersFromFirestore(String userId) async {
+  var userColection = FirebaseFirestore.instance.collection(
+    UserDm.collectionName,
+  );
+  var userDoc = userColection.doc(userId);
+  var snapShot = await userDoc.get();
+  Map jason = snapShot.data() as Map;
+  var user = UserDm.fromjason(jason);
+  return user;
+}
+
 Future<void> addEventToFirestore(EventDm event) async {
   var eventsCollection = FirebaseFirestore.instance.collection(
     EventDm.colictionName,
   );
   var emptyBoc = eventsCollection.doc();
-  emptyBoc.set({
-    "title": event.title,
-    "description": event.description,
-    "date": event.date,
-    "catogry": event.catogryId,
-    "Id": "",
-    "ownerId": "",
-  });
+  event.id = emptyBoc.id;
+  emptyBoc.set(event.toJson());
 }
-// List <EventDm> getAllEventFromFirestore(){}
+
+Future<List<EventDm>> getAllEventFromFirestore() async {
+  var eventCollection = FirebaseFirestore.instance.collection(
+    EventDm.colictionName,
+  );
+  var querySnapshot = await eventCollection.get();
+  List<EventDm> event = querySnapshot.docs.map((docSnapshot) {
+    var json = docSnapshot.data();
+    return EventDm.fromJson(json);
+  }).toList();
+  return event;
+}
 // List <EventDm>  getFavoritEventFromFirestore(){}

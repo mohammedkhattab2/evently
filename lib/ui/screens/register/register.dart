@@ -1,3 +1,5 @@
+import 'package:evently/data/firestore_utilties.dart';
+import 'package:evently/model/user_dm.dart';
 import 'package:evently/ui/screens/home/home.dart';
 import 'package:evently/ui/screens/home/tabs/home/Home_tab.dart';
 import 'package:evently/ui/utills/appassets.dart';
@@ -30,26 +32,28 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.transparent,
         title: Text("Register"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            buildapplogo(),
-            SizedBox(height: 24),
-            buildName(),
-            SizedBox(height: 16),
-            buildEmail(),
-            SizedBox(height: 16),
-            buildPassword(),
-            SizedBox(height: 16),
-            buildConfirmPassword(),
-            SizedBox(height: 16),
-            buildCreatAccount(),
-            SizedBox(height: 16),
-            builldLogin(),
-            SizedBox(height: 24),
-            buildLanguageToggle(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              buildapplogo(),
+              SizedBox(height: 24),
+              buildName(),
+              SizedBox(height: 16),
+              buildEmail(),
+              SizedBox(height: 16),
+              buildPassword(),
+              SizedBox(height: 16),
+              buildConfirmPassword(),
+              SizedBox(height: 16),
+              buildCreatAccount(),
+              SizedBox(height: 16),
+              builldLogin(),
+              SizedBox(height: 24),
+              buildLanguageToggle(),
+            ],
+          ),
         ),
       ),
     );
@@ -91,12 +95,20 @@ class _RegisterState extends State<Register> {
     onClick: () async {
       showLoading(context);
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailControler.text,
-          password: passwordControler.text,
+        var userCredintal = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailControler.text,
+              password: passwordControler.text,
+            );
+        UserDm.currentUser = UserDm(
+          id: userCredintal.user!.uid,
+          name: userNameControler.text,
+          emailAddress: emailControler.text,
         );
+        addUsersToFirestore(UserDm.currentUser!);
+
         Navigator.pop(context);
-        Navigator.push(context, Approuts.home);
+        Navigator.push(context, Approuts.login);
       } on FirebaseAuthException catch (e) {
         var message = ' something went wrong, please try again';
         if (e.code == 'weak-password') {

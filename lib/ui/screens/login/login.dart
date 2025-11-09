@@ -1,5 +1,7 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/model/user_dm.dart';
 import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utills/appassets.dart';
@@ -30,31 +32,33 @@ class _LoginState extends State<Login> {
     themeProvider = Provider.of(context);
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              buildapplogo(context),
-              SizedBox(height: 20),
-              buildEmailTextField(),
-              SizedBox(height: 16),
-              buildPasswordTextField(),
-              SizedBox(height: 16),
-              buildForgetPasswordText(context),
-              SizedBox(height: 24),
-              buildLoginbutton(),
-              SizedBox(height: 24),
-              buildSignupText(),
-              SizedBox(height: 24),
-              builldOrRow(),
-              SizedBox(height: 24),
-              buildGoogleLogin(),
-              SizedBox(height: 24.64),
-              buildLanguageToggle(),
-              SizedBox(height: 24.64),
-              buildthemeToggle(),
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                buildapplogo(context),
+                SizedBox(height: 20),
+                buildEmailTextField(),
+                SizedBox(height: 16),
+                buildPasswordTextField(),
+                SizedBox(height: 16),
+                buildForgetPasswordText(context),
+                SizedBox(height: 24),
+                buildLoginbutton(),
+                SizedBox(height: 24),
+                buildSignupText(),
+                SizedBox(height: 24),
+                builldOrRow(),
+                SizedBox(height: 24),
+                buildGoogleLogin(),
+                SizedBox(height: 24.64),
+                buildLanguageToggle(),
+                SizedBox(height: 24.64),
+                buildthemeToggle(),
+              ],
+            ),
           ),
         ),
       ),
@@ -105,10 +109,12 @@ class _LoginState extends State<Login> {
     onClick: () async {
       showLoading(context);
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailControler.text,
-          password: passwordControler.text,
-        );
+        var userCredintal = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+              email: emailControler.text,
+              password: passwordControler.text,
+            );
+        UserDm.currentUser = await getUsersFromFirestore(userCredintal.user!.uid);
         Navigator.pop(context);
         Navigator.push(context, Approuts.home);
       } on FirebaseAuthException catch (e) {

@@ -1,14 +1,22 @@
+import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/model/catogry_dm.dart';
 import 'package:evently/model/event_dm.dart';
+import 'package:evently/model/user_dm.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/widgets/catogry_tabs.dart';
 import 'package:evently/ui/widgets/event_widget.dart';
 import 'package:flutter/material.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  CatogryDm selectedCatogry = CatogryDm.homeCatogries[0];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,9 +36,9 @@ class HomeTab extends StatelessWidget {
         bottomRight: Radius.circular(20),
       ),
     ),
-    child: Column(children: [buildUserInfo(),
-    SizedBox(height: 8,),
-     buildCatogryTabs()]),
+    child: Column(
+      children: [buildUserInfo(), SizedBox(height: 8), buildCatogryTabs()],
+    ),
   );
 
   buildUserInfo() => Row(
@@ -43,7 +51,7 @@ class HomeTab extends StatelessWidget {
             style: TextStyle(color: Appcolor.white, fontSize: 14),
           ),
           Text(
-            "Jon Safwat",
+            UserDm.currentUser!.name,
             style: TextStyle(
               color: Appcolor.white,
               fontSize: 24,
@@ -73,28 +81,37 @@ class HomeTab extends StatelessWidget {
   );
 
   buildCatogryTabs() => CatogryTabs(
-    
-    onTabSelected: (catogry){
-  
+    onTabSelected: (catogry) {
+      selectedCatogry = catogry;
+      setState(() {});
     },
     catogries: CatogryDm.homeCatogries,
     selectedTabBg: Appcolor.white,
     unselectedTabBg: Appcolor.blue,
     selectedTabTextColor: Appcolor.blue,
-    unselectedTabTexrColor: Appcolor.white);
+    unselectedTabTexrColor: Appcolor.white,
+  );
 
-  Widget buildEventsList() => ListView.builder(
-    itemCount: 10,
-    itemBuilder: (context, index) => EventWidget(
-      eventDm: EventDm(
-        ownerId: "",
-        title: "This is a Birthday Party ",
-        catogryId: Appassets.birthday,
-        date: DateTime.now(),
-        description: "description",
-        lat: 0,
-        lng: 0, id: '',
-      ),
-    ),
+  Widget buildEventsList() => FutureBuilder(
+    future: getAllEventFromFirestore(),
+    builder: (context, snapshot) {
+      if (snapshot.hasError) {
+        return Center(child: Text(snapshot.error.toString()));
+      } else if (snapshot.hasData) {
+        var event = snapshot.data!;
+       event = event.where((event) {
+          if (selectedCatogry.title == "all") return true;
+          return event.catogryId == selectedCatogry.title;
+        }).toList();
+        return ListView.builder(
+          itemCount: event.length,
+          itemBuilder: (context, index) {
+            return EventWidget(eventDm: event[index]);
+          },
+        );
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
   );
 }
