@@ -1,16 +1,24 @@
+import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/model/catogry_dm.dart';
 import 'package:evently/model/event_dm.dart';
+import 'package:evently/model/user_dm.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:flutter/material.dart';
 
-class EventWidget extends StatelessWidget {
+class EventWidget extends StatefulWidget {
   final EventDm eventDm;
-  const EventWidget({super.key, required this.eventDm});
+  final Function? onfavClick;
+  const EventWidget({super.key, required this.eventDm, this.onfavClick});
 
   @override
+  State<EventWidget> createState() => _EventWidgetState();
+}
+
+class _EventWidgetState extends State<EventWidget> {
+  @override
   Widget build(BuildContext context) {
-    CatogryDm catogryDm = CatogryDm.fromtitle(eventDm.catogryId);
+    CatogryDm catogryDm = CatogryDm.fromtitle(widget.eventDm.catogryId);
     return Container(
       margin: EdgeInsets.all(8),
       height: MediaQuery.of(context).size.height * .25,
@@ -37,7 +45,7 @@ class EventWidget extends StatelessWidget {
         children: [
           Text(
             textAlign: TextAlign.center,
-            eventDm.date.day.toString(),
+            widget.eventDm.date.day.toString(),
             style: TextStyle(
               color: Appcolor.blue,
               fontSize: 20,
@@ -46,7 +54,7 @@ class EventWidget extends StatelessWidget {
           ),
           Text(
             textAlign: TextAlign.center,
-            getMonth(eventDm.date.month),
+            getMonth(widget.eventDm.date.month),
             style: TextStyle(
               color: Appcolor.blue,
               fontSize: 20,
@@ -69,7 +77,7 @@ class EventWidget extends StatelessWidget {
     child: Row(
       children: [
         Text(
-          eventDm.title,
+          widget.eventDm.title,
           style: TextStyle(
             color: Colors.black,
             fontSize: 14,
@@ -77,14 +85,11 @@ class EventWidget extends StatelessWidget {
           ),
         ),
         Spacer(),
-        ImageIcon(
-          AssetImage(
-            true ? Appassets.icfavoritActive : Appassets.icfavoritUnActive,
-          ),
-        ),
+        buildFavoriteIcon(),
       ],
     ),
   );
+
   String getMonth(int month) {
     const months = [
       'Jan',
@@ -106,5 +111,26 @@ class EventWidget extends StatelessWidget {
     }
 
     return months[month - 1];
+  }
+
+  Widget buildFavoriteIcon() {
+    var isFavorit = UserDm.currentUser!.favoritEvents.contains(
+      widget.eventDm.id,
+    );
+    return InkWell(
+      onTap: () async {
+        widget.onfavClick?.call();
+        isFavorit
+            ? await removeEventFromFavorite(widget.eventDm.id)
+            : await addEventToFavorite(widget.eventDm.id);
+        setState(() {});
+      },
+
+      child: ImageIcon(
+        AssetImage(
+          isFavorit ? Appassets.icfavoritActive : Appassets.icfavoritUnActive,
+        ),
+      ),
+    );
   }
 }

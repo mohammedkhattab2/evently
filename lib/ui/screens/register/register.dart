@@ -104,6 +104,7 @@ class _RegisterState extends State<Register> {
           id: userCredintal.user!.uid,
           name: userNameControler.text,
           emailAddress: emailControler.text,
+          favoritEvents: [],
         );
         addUsersToFirestore(UserDm.currentUser!);
 

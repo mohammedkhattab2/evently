@@ -116,7 +116,7 @@ class _LoginState extends State<Login> {
             );
         UserDm.currentUser = await getUsersFromFirestore(userCredintal.user!.uid);
         Navigator.pop(context);
-        Navigator.push(context, Approuts.home);
+        Navigator.pushReplacement(context, Approuts.home);
       } on FirebaseAuthException catch (e) {
         var message = e.message ?? "Error";
         Navigator.pop(context);

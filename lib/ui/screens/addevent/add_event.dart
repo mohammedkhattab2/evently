@@ -59,9 +59,7 @@ class _AddEventState extends State<AddEvent> {
   buildCatogryTab() => CatogryTabs(
     onTabSelected: (catogry) {
       selectedCatogry = catogry;
-      setState(() {
-        
-      });
+      setState(() {});
     },
     catogries: CatogryDm.creatEventCatogries,
     selectedTabBg: Appcolor.blue,
@@ -201,6 +199,7 @@ class _AddEventState extends State<AddEvent> {
           description: descriptionController.text,
         );
         await addEventToFirestore(eventDm);
+        Navigator.pop(context);
         Navigator.pop(context);
       },
     ),

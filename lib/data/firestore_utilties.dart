@@ -41,4 +41,36 @@ Future<List<EventDm>> getAllEventFromFirestore() async {
   }).toList();
   return event;
 }
-// List <EventDm>  getFavoritEventFromFirestore(){}
+Future<List<EventDm>> getFavoritEvents() async {
+  var eventCollection = FirebaseFirestore.instance.collection(
+    EventDm.colictionName,
+  );
+  var querySnapshot = await eventCollection.where("id", whereIn: UserDm.currentUser!.favoritEvents ).get();
+  List<EventDm> event = querySnapshot.docs.map((docSnapshot) {
+    var json = docSnapshot.data();
+    return EventDm.fromJson(json);
+  }).toList();
+  return event;
+}
+
+Future addEventToFavorite(String eventId) async {
+  var userCollection = FirebaseFirestore.instance.collection(
+    UserDm.collectionName,
+  );
+  var currentUser = userCollection.doc(UserDm.currentUser!.id);
+  currentUser.update({
+    "favoritEvents": FieldValue.arrayUnion([eventId]),
+  });
+  UserDm.currentUser!.favoritEvents.add(eventId);
+}
+
+Future removeEventFromFavorite(String eventId) async {
+  var userCollection = FirebaseFirestore.instance.collection(
+    UserDm.collectionName,
+  );
+  var currentUser = userCollection.doc(UserDm.currentUser!.id);
+  currentUser.update({
+    "favoritEvents": FieldValue.arrayRemove([eventId]),
+  });
+  UserDm.currentUser!.favoritEvents.remove(eventId);
+}
