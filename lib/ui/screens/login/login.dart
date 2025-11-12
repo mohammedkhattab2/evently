@@ -1,4 +1,5 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:evently/data/auth_helper.dart';
 import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/model/user_dm.dart';
@@ -25,6 +26,7 @@ class _LoginState extends State<Login> {
   late AppLocalizations l10n;
   TextEditingController emailControler = TextEditingController();
   TextEditingController passwordControler = TextEditingController();
+  GoogleSignInService googleSignInService = GoogleSignInService();
   @override
   Widget build(BuildContext context) {
     l10n = AppLocalizations.of(context)!;
@@ -114,7 +116,9 @@ class _LoginState extends State<Login> {
               email: emailControler.text,
               password: passwordControler.text,
             );
-        UserDm.currentUser = await getUsersFromFirestore(userCredintal.user!.uid);
+        UserDm.currentUser = await getUsersFromFirestore(
+          userCredintal.user!.uid,
+        );
         Navigator.pop(context);
         Navigator.pushReplacement(context, Approuts.home);
       } on FirebaseAuthException catch (e) {
@@ -161,7 +165,12 @@ class _LoginState extends State<Login> {
 
   Widget buildGoogleLogin() => CustomBotton(
     text: l10n.loginWithGoogle,
-    onClick: () async {},
+    onClick: () async {
+      UserDm? user = await googleSignInService.signInWithGoogle();
+      if (user != null) {
+        Navigator.push(context, Approuts.home);
+      }
+    },
     icon: Image.asset(Appassets.icgoogle),
     backGroundcolor: Appcolor.white,
     textColor: Appcolor.blue,

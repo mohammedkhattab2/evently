@@ -30,22 +30,28 @@ Future<void> addEventToFirestore(EventDm event) async {
   emptyBoc.set(event.toJson());
 }
 
-Future<List<EventDm>> getAllEventFromFirestore() async {
+Stream<List<EventDm>> getAllEventFromFirestore() {
   var eventCollection = FirebaseFirestore.instance.collection(
     EventDm.colictionName,
   );
-  var querySnapshot = await eventCollection.get();
-  List<EventDm> event = querySnapshot.docs.map((docSnapshot) {
-    var json = docSnapshot.data();
-    return EventDm.fromJson(json);
-  }).toList();
-  return event;
+  Stream<QuerySnapshot<Map<String, dynamic>>> stream = eventCollection
+      .snapshots();
+  return stream.map((querySnapshot) {
+    List<EventDm> event = querySnapshot.docs.map((docSnapshot) {
+      var json = docSnapshot.data();
+      return EventDm.fromJson(json);
+    }).toList();
+    return event;
+  });
 }
+
 Future<List<EventDm>> getFavoritEvents() async {
   var eventCollection = FirebaseFirestore.instance.collection(
     EventDm.colictionName,
   );
-  var querySnapshot = await eventCollection.where("id", whereIn: UserDm.currentUser!.favoritEvents ).get();
+  var querySnapshot = await eventCollection
+      .where("id", whereIn: UserDm.currentUser!.favoritEvents)
+      .get();
   List<EventDm> event = querySnapshot.docs.map((docSnapshot) {
     var json = docSnapshot.data();
     return EventDm.fromJson(json);

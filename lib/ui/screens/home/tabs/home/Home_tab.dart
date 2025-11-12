@@ -2,6 +2,7 @@ import 'package:evently/data/firestore_utilties.dart';
 import 'package:evently/model/catogry_dm.dart';
 import 'package:evently/model/event_dm.dart';
 import 'package:evently/model/user_dm.dart';
+import 'package:evently/ui/screens/event_details/event_daetails.dart';
 import 'package:evently/ui/utills/appassets.dart';
 import 'package:evently/ui/utills/appcolor.dart';
 import 'package:evently/ui/widgets/catogry_tabs.dart';
@@ -27,7 +28,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  buildHeader() => Container(
+ Widget buildHeader() => Container(
     padding: EdgeInsets.all(16),
     decoration: BoxDecoration(
       color: Appcolor.blue,
@@ -41,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     ),
   );
 
-  buildUserInfo() => Row(
+ Widget buildUserInfo() => Row(
     children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class _HomeTabState extends State<HomeTab> {
     ],
   );
 
-  buildCatogryTabs() => CatogryTabs(
+  Widget buildCatogryTabs() => CatogryTabs(
     onTabSelected: (catogry) {
       selectedCatogry = catogry;
       setState(() {});
@@ -92,8 +93,8 @@ class _HomeTabState extends State<HomeTab> {
     unselectedTabTexrColor: Appcolor.white,
   );
 
-  Widget buildEventsList() => FutureBuilder(
-    future: getAllEventFromFirestore(),
+  Widget buildEventsList() => StreamBuilder(
+    stream: getAllEventFromFirestore(),
     builder: (context, snapshot) {
       if (snapshot.hasError) {
         return Center(child: Text(snapshot.error.toString()));
@@ -106,7 +107,9 @@ class _HomeTabState extends State<HomeTab> {
         return ListView.builder(
           itemCount: event.length,
           itemBuilder: (context, index) {
-            return EventWidget(eventDm: event[index]);
+            return InkWell(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> EventDaetails(eventDm: event[index]) )),
+              child: EventWidget(eventDm: event[index]));
           },
         );
       } else {

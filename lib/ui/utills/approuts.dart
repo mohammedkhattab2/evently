@@ -1,4 +1,5 @@
 import 'package:evently/ui/screens/addevent/add_event.dart';
+import 'package:evently/ui/screens/event_details/event_daetails.dart';
 import 'package:evently/ui/screens/home/home.dart';
 import 'package:evently/ui/screens/login/login.dart';
 import 'package:evently/ui/screens/register/register.dart';
@@ -24,4 +25,5 @@ abstract final class Approuts {
   static Route get addEvent {
     return MaterialPageRoute(builder: (_) => const AddEvent());
   }
+ 
 }
