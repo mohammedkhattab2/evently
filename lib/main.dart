@@ -3,6 +3,7 @@ import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/provider/language_provider.dart';
 import 'package:evently/ui/screens/addevent/add_event.dart';
 import 'package:evently/ui/screens/home/home.dart';
+import 'package:evently/ui/screens/home/tabs/home/Home_tab.dart';
 import 'package:evently/ui/screens/login/login.dart';
 import 'package:evently/ui/provider/theme_provider.dart';
 import 'package:evently/ui/utills/apptheme.dart';
@@ -27,13 +28,12 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late LanguageProvider languageProvider;
-  late ThemeProvider themeProvider;
 
   @override
   Widget build(BuildContext context) {
-    languageProvider = Provider.of(context);
-    themeProvider = Provider.of(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // Spanish
       ],
-      home: const Login(),
+      home: const Home(),
     );
   }
 }

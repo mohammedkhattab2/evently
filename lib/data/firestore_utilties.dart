@@ -80,3 +80,10 @@ Future removeEventFromFavorite(String eventId) async {
   });
   UserDm.currentUser!.favoritEvents.remove(eventId);
 }
+
+Future<void> updateEventToFirestore(EventDm event) async {
+  var eventsCollection = FirebaseFirestore.instance.collection(
+    EventDm.colictionName,
+  );
+ return eventsCollection.doc(event.id).update(event.toJson());
+}

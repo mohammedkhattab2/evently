@@ -28,7 +28,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
- Widget buildHeader() => Container(
+  Widget buildHeader() => Container(
     padding: EdgeInsets.all(16),
     decoration: BoxDecoration(
       color: Appcolor.blue,
@@ -42,7 +42,7 @@ class _HomeTabState extends State<HomeTab> {
     ),
   );
 
- Widget buildUserInfo() => Row(
+  Widget buildUserInfo() => Row(
     children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class _HomeTabState extends State<HomeTab> {
             style: TextStyle(color: Appcolor.white, fontSize: 14),
           ),
           Text(
-            UserDm.currentUser!.name,
+            UserDm.currentUser?.name ?? "Guest",
             style: TextStyle(
               color: Appcolor.white,
               fontSize: 24,
@@ -100,7 +100,7 @@ class _HomeTabState extends State<HomeTab> {
         return Center(child: Text(snapshot.error.toString()));
       } else if (snapshot.hasData) {
         var event = snapshot.data!;
-       event = event.where((event) {
+        event = event.where((event) {
           if (selectedCatogry.title == "all") return true;
           return event.catogryId == selectedCatogry.title;
         }).toList();
@@ -108,8 +108,14 @@ class _HomeTabState extends State<HomeTab> {
           itemCount: event.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> EventDaetails(eventDm: event[index]) )),
-              child: EventWidget(eventDm: event[index]));
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EventDaetails(eventDm: event[index]),
+                ),
+              ),
+              child: EventWidget(eventDm: event[index]),
+            );
           },
         );
       } else {

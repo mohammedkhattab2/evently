@@ -166,9 +166,28 @@ class _LoginState extends State<Login> {
   Widget buildGoogleLogin() => CustomBotton(
     text: l10n.loginWithGoogle,
     onClick: () async {
-      UserDm? user = await googleSignInService.signInWithGoogle();
-      if (user != null) {
-        Navigator.push(context, Approuts.home);
+      showLoading(context);
+      try {
+        UserDm? user = await googleSignInService.signInWithGoogle();
+        Navigator.pop(context);
+        if (user != null) {
+          Navigator.pushReplacement(context, Approuts.home);
+        } else {
+          showMessege(
+            context,
+            title: "Error",
+            content: "Failed to sign in with Google",
+            posButtonTitle: "ok",
+          );
+        }
+      } catch (e) {
+        Navigator.pop(context);
+        showMessege(
+          context,
+          title: "Error",
+          content: "An error occurred: $e",
+          posButtonTitle: "ok",
+        );
       }
     },
     icon: Image.asset(Appassets.icgoogle),

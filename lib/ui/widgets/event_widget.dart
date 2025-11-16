@@ -114,15 +114,23 @@ class _EventWidgetState extends State<EventWidget> {
   }
 
   Widget buildFavoriteIcon() {
-    var isFavorit = UserDm.currentUser!.favoritEvents.contains(
-      widget.eventDm.id,
-    );
+    // Safely handle null currentUser. If no user, treat as not favorite.
+    var isFavorit = (UserDm.currentUser?.favoritEvents ?? [])
+        .contains(widget.eventDm.id);
+
     return InkWell(
       onTap: () async {
+        // If user is not signed in, don't allow favorites
+        if (UserDm.currentUser == null) {
+          return;
+        }
+
         widget.onfavClick?.call();
-        isFavorit
-            ? await removeEventFromFavorite(widget.eventDm.id)
-            : await addEventToFavorite(widget.eventDm.id);
+        if (isFavorit) {
+          await removeEventFromFavorite(widget.eventDm.id);
+        } else {
+          await addEventToFavorite(widget.eventDm.id);
+        }
         setState(() {});
       },
 
